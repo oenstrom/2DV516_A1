@@ -8,10 +8,10 @@ def main():
 
     train_images, train_labels, test_images, test_labels = mnist("A1_datasets")
   
-    # train_images = train_images[:5000]
-    # train_labels = train_labels[:5000]
-    # test_images = test_images[:500]
-    # test_labels = test_labels[:500]
+    # train_images = train_images[:10000]
+    # train_labels = train_labels[:10000]
+    # test_images = test_images[:1000]
+    # test_labels = test_labels[:1000]
 
     KNN = knn.KNN()
     KNN.set_training(train_images, train_labels)
