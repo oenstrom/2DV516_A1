@@ -9,7 +9,6 @@ OK            = TRAIN[TRAIN[:, 2] == 1]
 U_CHIPS       = np.array([[-0.3, 1.0], [-0.5, -0.1], [0.6, 0.0]])
 KNN           = KNeighborsClassifier()
 
-
 def color_map(x):
   """Map class to colors."""
   return np.array(list(map(lambda c : "green" if c > 0 else "red", x)))
@@ -61,8 +60,6 @@ def main():
 
   fig.tight_layout()
   plt.show()
-
-
 
 if __name__ == "__main__":
   main()

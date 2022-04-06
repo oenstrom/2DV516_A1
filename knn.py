@@ -16,8 +16,8 @@ class KNN:
       distances = self.euc_dist(self.X_train, x_te, axis)
       shortest_idx = distances.argsort()[:k]
       values, counts = np.unique(self.y_train[shortest_idx], return_counts=True, axis=0)
-      print(values)
-      print(counts)
+      # print(values)
+      # print(counts)
       x_te_class = values[np.argmax(counts)]
       result.append(x_te_class)
     return np.array(result)

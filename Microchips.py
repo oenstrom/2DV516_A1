@@ -7,16 +7,7 @@ TRAIN         = np.loadtxt("A1_datasets/microchips.csv", delimiter=",", dtype=No
 FAIL          = TRAIN[TRAIN[:, 2] == 0]
 OK            = TRAIN[TRAIN[:, 2] == 1]
 U_CHIPS       = np.array([[-0.3, 1.0], [-0.5, -0.1], [0.6, 0.0]])
-GRID_SIZE     = 100
-MIN_X         = TRAIN[:, 0].min() - 0.1
-MAX_X         = TRAIN[:, 0].max() + 0.1
-MIN_Y         = TRAIN[:, 1].min() - 0.1
-MAX_Y         = TRAIN[:, 1].max() + 0.1
-A             = np.linspace(MIN_X, MAX_X, GRID_SIZE)
-B             = np.linspace(MIN_Y, MAX_Y, GRID_SIZE)
-XX, YY        = np.meshgrid(A, B)
-GRID_AS_TEST  = np.stack([XX.ravel(), YY.ravel()], axis=1)
-KNN = knn.KNN()
+KNN           = knn.KNN()
 
 def color_map(x):
   """Map class to colors."""
@@ -24,8 +15,16 @@ def color_map(x):
 
 def plot_decision_boundary(ax, k):
   """Draw the decision boundary on ax and return it."""
-  grid_k_nn = KNN.classify(k, GRID_AS_TEST)
-  ax.imshow(grid_k_nn.reshape(GRID_SIZE, GRID_SIZE), origin="lower", extent=(MIN_X, MAX_X, MIN_Y, MAX_Y))
+  grid_size     = 100
+  min_x         = TRAIN[:, 0].min() - 0.1
+  max_x         = TRAIN[:, 0].max() + 0.1
+  min_y         = TRAIN[:, 1].min() - 0.1
+  max_y         = TRAIN[:, 1].max() + 0.1
+  xx, yy        = np.meshgrid(np.linspace(min_x, max_x, grid_size), np.linspace(min_y, max_y, grid_size))
+  grid_as_test  = np.stack([xx.ravel(), yy.ravel()], axis=1)
+  
+  grid_k_nn = KNN.classify(k, grid_as_test)
+  ax.imshow(grid_k_nn.reshape(grid_size, grid_size), origin="lower", extent=(min_x, max_x, min_y, max_y))
   ax.scatter(TRAIN[:, 0], TRAIN[:, 1], marker=".", c=[[0,0,0,0]], edgecolors=color_map(TRAIN[:, 2]))
   return ax
 
