@@ -22,9 +22,8 @@ def main():
   ax2.set_ylabel("y")
   ax2.scatter(TEST_SET[:, 0], TEST_SET[:, 1], marker=".")
 
-
-  KnnClass = knn.KNN()
-  KnnClass.set_training(TRAINING_SET, TRAINING_SET)
+  KNN = knn.KNN()
+  KNN.set_training(TRAINING_SET[:, 0], TRAINING_SET[:, 1])
 
   fig2     = plt.figure("k-NN regression and training errors", figsize=(12, 6))
   x_values = np.linspace(1, 25, 200)
@@ -32,15 +31,15 @@ def main():
     ax = fig2.add_subplot(231 + i)
     ax.set_xlabel("x")
     ax.set_ylabel("y")
-    result_training = KnnClass.regressor(k, TRAINING_SET[:, 0])
-    ax.title.set_text(f"k = {k}, MSE = {KnnClass.mse(TRAINING_SET[:, 1], result_training[:, 1], 2)}")
+    est_train_y = KNN.regressor(k, TRAINING_SET[:, 0])
+    ax.title.set_text(f"k = {k}, MSE = {KNN.mse(TRAINING_SET[:, 1], est_train_y, 2)}")
     
-    regression = KnnClass.regressor(k, x_values)
+    regression_y = KNN.regressor(k, x_values)
     ax.scatter(TRAINING_SET[:, 0], TRAINING_SET[:, 1], marker=".", c="darkblue")
-    ax.plot(regression[:, 0], regression[:, 1], color="lightblue")
+    ax.plot(x_values, regression_y, color="lightblue")
 
-    test_result = KnnClass.regressor(k, TEST_SET[:, 0])
-    print(f"MSE test error for k = {k}:", KnnClass.mse(TEST_SET[:, 1], test_result[:, 1], 2), sep="\n  ")
+    est_test_y = KNN.regressor(k, TEST_SET[:, 0])
+    print(f"MSE test error for k = {k}:", KNN.mse(TEST_SET[:, 1], est_test_y, 2), sep="\n  ")
 
   fig2.tight_layout()
   plt.show()
