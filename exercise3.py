@@ -26,6 +26,13 @@ def main():
   print(train_images)
   print(test_images[0].shape)
 
+  result = KNN.classify(3, test_images)
+  print(result)
+  exit()
+  # for i, img in enumerate(test_images):
+  #   label = test_labels[i]
+
+
   img = test_images[1337]
   lab = test_labels[1337]
   awd = KNN.classify(500, [img])
